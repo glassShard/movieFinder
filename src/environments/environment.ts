@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  hboLink: 'assets/movies/hbo-movies.json',
+  netflixLink: 'assets/movies/netflix-movies.json',
+  images: 'assets/images/'
 };
 
 /*

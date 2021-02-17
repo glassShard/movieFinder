@@ -1,0 +1,65 @@
+<div class="row">
+  <div class="col-12 mt-3 d-flex justify-content-center flex-wrap">
+    <button class="btn btn-primary btn-lg mr-2" (click)="hungarian()"
+            [disabled]="flagHun">Csak
+      magyar hanggal</button>
+    <button class="btn btn-primary btn-lg" (click)="hungarian()" [disabled]="!flagHun">Összes
+    </button>
+  </div>
+  <div class="col-12 mt-3 d-flex justify-content-center flex-wrap">
+    <div class="col-lg-6 col-sm-8 col-12">
+      <input #titleActorOrDirector type="text" class="form-control form-control-lg" id="inputTitle"
+             placeholder="cím, színész vagy rendező:" (keyup)="onKeyup()"/>
+    </div>
+  </div>
+
+  <div class="col-12 mt-3 d-flex justify-content-center flex-wrap">
+    <div class="col-lg-6 col-sm-8 col-12">
+        <input #synopsis type="text" class="form-control form-control-lg" id="inputActor"
+               placeholder="leírás:" (keyup)="onKeyup()"/>
+    </div>
+  </div>
+
+  <div class="col-12 mt-3 d-flex justify-content-center flex-wrap" *ngIf="movies">
+    <p>{{ movies.length }} film a listában</p>
+  </div>
+
+
+  <div class="col-12 mt-3 d-flex justify-content-center flex-wrap">
+    <ng-container *ngIf="movies; else loader">
+      <div class="card-wrapper" *ngFor="let movie of movies">
+        <div class="card my-card">
+          <img [src]="movie.image[0].url" class="card-img-top" alt="..." loading="lazy">
+          <div class="logo">
+            <img [src]="movie.provider === 'HBO' ? images + 'HBO_Go-Logo.wine.svg' : images +
+            'netflix_full.png'" alt="">
+          </div>
+          <div class="card-body">
+            <h4 class="card-title">{{ movie.name.replace(' - HBO GO', '') }}</h4>
+            <!--          <h6>Értékelés: {{ movie.aggregateRating.ratingValue }} /-->
+            <!--            {{ movie.aggregateRating.bestRating}}</h6>-->
+            <h6 *ngIf="movie.director[0]">Rendező:
+              <span class="text-muted">{{ movie.director[0].name }}</span></h6>
+            <h6>Színészek:
+              <span class="text-muted"
+                    *ngFor="let actor of movie.actor.slice(0, 3), let i = index">{{ actor.name }}{{
+                i !== 2 ? ', ' : '' }}</span></h6>
+            <h6>{{ movie.dateCreated }}</h6>
+            <h6>Hang: {{ movie.audio }}</h6>
+            <p
+              class="card-text my-card-text"><small
+              class="text-muted">{{ movie.description }}</small></p>
+            <a type="button" [href]="movie.url" class="btn btn-primary btn-lg" target="_blank">
+              Megnézem</a>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+
+  </div>
+</div>
+
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>

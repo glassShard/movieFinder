@@ -1,0 +1,38 @@
+<div class="my-container">
+  <div class="fade-overlay">
+    <div class="container">
+      <div class="my-jumbotron mb-0">
+        <h1 class="display-4 my-display4">Filmkereső</h1>
+        <p class="lead my-lead">Keress a magyarországi HBO GO és Netflix kínálatában! Mobil
+          hálózaton ne
+          használd, mert nagy mennyiségű adatot tölt le. Közvetlenül navigálhatsz a megfelelő
+          oldara, hogy megnézd a filmet, de ne feledd: megnézni csak akkor tudod, ha az adott
+          szolgáltatónak előfizetője vagy.</p>
+        <hr class="my-4">
+        <p class="lead my-lead" *ngIf="date">Adatok utoljára frissítve: HBO GO - {{ date.hbo }},
+          Netflix -
+          {{ date.netflix }}</p>
+        <hr class="my-4">
+        <div class="col-12 mt-3 mt-5 pl-0" *ngIf="categories; else loader">
+          <ng-container *ngFor="let category of categories">
+            <button type="button"
+                    class="btn btn-lg btn-primary mb-2 mr-2 d-inline-flex justify-content-center align-items-center"
+                    *ngIf="category.movies.length !== 0"
+                    (click)="clickCategory($event, category)">{{ category.name }}
+              <span
+                class="badge bg-danger ml-2 text-light">{{ category.movies.length }}</span></button>
+          </ng-container>
+        </div>
+        <div class="free-image"><small>Image by <a
+          href="https://pixabay.com/users/mastertux-470906/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=3057394">MasterTux</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=3057394">Pixabay</a></small></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>
+
+
+
